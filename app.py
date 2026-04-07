@@ -33,13 +33,13 @@ st.markdown("---")
 if st.button("➡️ Mulai Perhitungan"):
     st.success("Silakan lanjut ke menu perhitungan di sidebar")
 if menu == "Beranda":
-    # isi halaman awal
+    st.write("Halaman Beranda")
 
 elif menu == "Perhitungan":
-    # input data & bobot
+    st.write("Halaman Perhitungan ")
 
 elif menu == "Ranking":
-    # hasil ranking
+    st.write("Hasil Ranking")
 
 elif menu == "Sensitivitas":
-    # analisis
+    st.write("Analisis Sensitivitas")
