@@ -28,14 +28,12 @@ st.write("""
 
 st.info("Metode yang digunakan: AHP")
 
+st.write ("Pergi ke Menu Sidebar untuk Melanjutkan Perhitungan")
 st.markdown("---")
 
 menu = st.sidebar.selectbox("Menu", 
                             ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
                            )
-if st.button("➡️ Mulai Perhitungan"):
-    st.success("Silakan lanjut ke menu perhitungan di sidebar")
-    
 if menu == "Beranda":
     st.write("Halaman Beranda")
 
