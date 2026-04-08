@@ -28,10 +28,10 @@ if menu == "Beranda":
 
     st.subheader("📊 Kriteria Penilaian")
     st.write("""
-    1. Tanggungan Keluarga  
-    2. Status Anak  
-    3. Nilai Akademik  
-    4. Penghasilan Orang Tua  
+    1. Penghasilan Orang Tua 
+    2. Tanggungan Keluarga 
+    3. Status Anak   
+    4. Nilai Akademik
     5. Motivasi Belajar  
     """)
 
