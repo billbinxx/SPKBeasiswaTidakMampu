@@ -30,12 +30,14 @@ st.write("""
 
 st.info("Metode yang digunakan: AHP")
 
-st.write ("Pergi ke Menu Sidebar untuk Melanjutkan Perhitungan")
+st.write ("Gunakan Menu Sidebar untuk Melanjutkan Perhitungan")
 st.markdown("---")
 
 menu = st.sidebar.selectbox
-st.write ("Sistem Penunjang Keputusan Beasiswa Tidak Mampu SMKN Gudo Jombang")
-("Menu", ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"])
+("Menu", 
+ ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
+)
+
 if menu == "Beranda":
     pass
 
@@ -47,3 +49,21 @@ elif menu == "Hasil Ranking":
 
 elif menu == "Analisis Sensitivitas":
     st.write("Analisis Sensitivitas")
+    
+#===PERHITUNGAN
+elif menu == "Perhitungan": 
+    st.title ("Perhitungan AHP")
+
+# INPUT DATA ALTERNATIF 
+st.subheader("Input Data Alternatif")
+
+ data = pd.DataFrame({
+        "Nama": ["Siswa 1", "Siswa 2"],
+        "Tanggungan": [2,3],
+        "Status": [1,2],
+        "Akademik": [3,2],
+        "Penghasilan": [2,1],
+        "Motivasi": [3,3],
+    })
+
+    edited_data = st.data_editor(data, num_rows="dynamic")
