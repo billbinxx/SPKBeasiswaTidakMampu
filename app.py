@@ -44,8 +44,9 @@ elif menu == "Input Data":
     st.subheader("📌 Informasi Kriteria & Skala Penilaian")
 
     with st.expander("Lihat Penjelasan Kriteria"):
-        st.write("Skala yang digunakan merupakan bentuk yang telah di konversi menjadi angka 1-3 dengan keterangan seperti dibawah ini, untuk mempermundah proses perhitungan")
-        Kriteria:
+        st.write("""
+        Skala yang digunakan merupakan bentuk yang telah di konversi menjadi angka 1-3 dengan keterangan seperti dibawah ini, untuk mempermundah proses perhitungan
+        **Kriteria:**
         - 3 = Sangat Layak  
         - 2 = Cukup Layak  
         - 1 = Kurang Layak  
@@ -53,7 +54,7 @@ elif menu == "Input Data":
         **Indikator Penilaian:** 
         1. **Penghasilan Orang Tua** 
         - < 500.000 = 3 
-        - 500.000 -- 900.000 = 2 
+        - 500.000 - 900.000 = 2 
         - ≥ 1 juta = 1
 
         2. **Tanggungan Keluarga** 
