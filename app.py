@@ -32,11 +32,13 @@ st.markdown("---")
 
 if st.button("➡️ Mulai Perhitungan"):
     st.success("Silakan lanjut ke menu perhitungan di sidebar")
+menu = st.sidebar.selectbox("Menu", 
+                            ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"])
 if menu == "Beranda":
     st.write("Halaman Beranda")
 
 elif menu == "Perhitungan":
-    st.write("Halaman Perhitungan ")
+    st.write("Perhitungan ")
 
 elif menu == "Ranking":
     st.write("Hasil Ranking")
