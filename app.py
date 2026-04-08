@@ -3,10 +3,11 @@ import pandas as pd
 import numpy as np
 
 st.set_page_config(page_title="SPK Beasiswa Tidak Mampu", layout="centered")
+
 #===MENUBAR
 menu = st.sidebar.selectbox(
- "Menu", 
- ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
+    "Menu", 
+    ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
 )
 
 # ===== HALAMAN AWAL =====
@@ -34,14 +35,14 @@ if menu == "Beranda":
     5. Motivasi Belajar  
     """)
 
-   st.info("Metode yang digunakan: AHP")
+    st.info("Metode yang digunakan: AHP")
+    st.write("Gunakan Menu Sidebar untuk Melanjutkan Perhitungan")
+    st.markdown("---")
 
-   st.write ("Gunakan Menu Sidebar untuk Melanjutkan Perhitungan")
-   st.markdown("---")
-
+# ===== PERHITUNGAN =====
 elif menu == "Perhitungan":
-    st.write("Perhitungan ")
-      st.subheader("Input Data Alternatif")
+    st.title("📊 Perhitungan")
+    st.subheader("Input Data Alternatif")
 
     data = pd.DataFrame({
         "Nama": ["Siswa 1", "Siswa 2"],
@@ -54,9 +55,3 @@ elif menu == "Perhitungan":
 
     edited_data = st.data_editor(data, num_rows="dynamic")
 
-elif menu == "Hasil Ranking":
-    st.write("Hasil Ranking")
-
-elif menu == "Analisis Sensitivitas":
-    st.write("Analisis Sensitivitas")
-    
