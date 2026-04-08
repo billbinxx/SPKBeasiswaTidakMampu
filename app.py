@@ -122,3 +122,68 @@ elif menu == "Input Data":
         st.session_state.data = edited_data
         st.session_state.matrix = edited_matrix.values
         st.success("Data berhasil disimpan!")
+
+# ===== HASIL RANKING =====
+elif menu == "Hasil Ranking":
+    st.title("🏆 Hasil Ranking")
+
+    if "data" in st.session_state and "matrix" in st.session_state:
+
+        data = st.session_state.data.copy()
+        matrix = st.session_state.matrix
+
+        criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
+        n = len(criteria)
+
+        # --- MATRIX ---
+        st.subheader("Matriks Perbandingan")
+        st.dataframe(pd.DataFrame(matrix, columns=criteria, index=criteria))
+
+        # --- JUMLAH ---
+        col_sum = matrix.sum(axis=0)
+        st.subheader("Jumlah Perbandingan Matriks")
+        st.dataframe(pd.DataFrame(col_sum.reshape(1,-1), columns=criteria))
+
+        # --- NORMALISASI ---
+        norm_matrix = matrix / col_sum
+        st.subheader("Normalisasi Matriks")
+        st.dataframe(pd.DataFrame(norm_matrix, columns=criteria, index=criteria))
+
+        # --- BOBOT ---
+        weights = norm_matrix.mean(axis=1)
+        st.subheader("Bobot Prioritas")
+        st.dataframe(pd.DataFrame({
+            "Kriteria": criteria,
+            "Bobot": weights
+        }))
+
+        # --- CI & CR ---
+        lambda_max = (col_sum * weights).sum()
+        CI = (lambda_max - n) / (n - 1)
+        RI = 1.12
+        CR = CI / RI
+
+        st.subheader("Uji Konsistensi")
+        st.write(f"λ max: {round(lambda_max,4)}")
+        st.write(f"CI: {round(CI,4)}")
+        st.write(f"CR: {round(CR,4)}")
+
+        if CR < 0.1:
+            st.success("Konsisten ✅")
+        else:
+            st.error("Tidak Konsisten ❌")
+
+        # ===== RANKING =====
+        st.subheader("🏆 Ranking Alternatif")
+
+        nilai = data[criteria].values
+        skor = np.dot(nilai, weights)
+
+        data["Skor Akhir"] = skor
+        data = data.sort_values(by="Skor Akhir", ascending=False)
+        data["Ranking"] = range(1, len(data)+1)
+
+        st.dataframe(data)
+
+    else:
+        st.warning("Silakan input data terlebih dahulu di menu Input Data")
