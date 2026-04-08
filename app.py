@@ -7,7 +7,7 @@ st.set_page_config(page_title="SPK Beasiswa Tidak Mampu", layout="centered")
 #===MENUBAR
 menu = st.sidebar.selectbox(
     "Menu", 
-    ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
+    ["Beranda", "Input Data", "Hasil Ranking","Analisis Sensitivitas"]
 )
 
 # ===== HALAMAN AWAL =====
@@ -85,11 +85,17 @@ elif menu == "Perhitungan":
         **Catatan:**
         Data yang dimasukkan sudah dalam bentuk angka berdasarkan konversi indikator di atas.
         """)
+
+    #INPUT DATA ALTERNATIF
+    elif menu == "Input Data":
+    st.title("Input Data")
+
+    # INPUT DATA ALTERNATIF
     st.subheader("Input Data Alternatif")
 
     data = pd.DataFrame({
         "Nama": ["Siswa 1", "Siswa 2"],
-        "Kelas dan Jurusan": ["X TKJ 1", "XI TOT"],
+        "Kelas": ["X TKJ 1", "XI TOT"],
         "Tanggungan": [2,3],
         "Status": [1,2],
         "Akademik": [3,2],
@@ -99,35 +105,30 @@ elif menu == "Perhitungan":
 
     edited_data = st.data_editor(data, num_rows="dynamic")
 
-    st.subheader("Pairwise Comparison Kriteria")
+    # ===== MATRIX INPUT =====
+    st.subheader("Input Matriks Perbandingan Kriteria")
 
-    criteria = ["Penghasilan Ortu","Jumlah Tanggungan","Status Anak (dikeluarga)","Prestasi Akademik","Motivasi Belajar"]
-    n = len(criteria)
-    
-    matrix = np.ones((n,n))
-    
-    for i in range(n):
-        for j in range(i+1, n):
-            nilai = st.number_input(
-                f"{criteria[i]} vs {criteria[j]}",
-                min_value=1.0,
-                max_value=9.0,
-                value=1.0,
-                key=f"{i}{j}"
-            )
-            matrix[i][j] = nilai
-            matrix[j][i] = 1 / nilai
-            
-        st.subheader("Matriks Perbandingan")
-            df_matrix = pd.DataFrame(matrix, columns=criteria, index=criteria)
-            st.dataframe(df_matrix)
-            
-    if st.button("Hitung Bobot"):
-        col_sum = matrix.sum(axis=0)
-        norm_matrix = matrix / col_sum
-        weights = norm_matrix.mean(axis=1)
-    
-        st.subheader("Bobot Kriteria")
-    
-        for i, c in enumerate(criteria):
-            st.write(f"{c}: {round(weights[i],4)}")
+    with st.expander("📌 Skala Saaty (1–9)"):
+        st.write("""
+        1 = Sama penting  
+        3 = Sedikit lebih penting  
+        5 = Lebih penting  
+        7 = Sangat penting  
+        9 = Mutlak  
+        """)
+
+    criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
+
+    matrix_df = pd.DataFrame(
+        np.ones((5,5)),
+        columns=criteria,
+        index=criteria
+    )
+
+    edited_matrix = st.data_editor(matrix_df)
+
+    # SIMPAN KE SESSION
+    if st.button("Simpan Data"):
+        st.session_state.data = edited_data
+        st.session_state.matrix = edited_matrix.values
+        st.success("Data berhasil disimpan! Lanjut ke menu Hasil Perhitungan")
