@@ -58,7 +58,7 @@ elif menu == "Perhitungan":
 
     st.subheader("Pairwise Comparison Kriteria")
 
-    criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
+    criteria = ["Penghasilan Ortu","Jumlah Tanggungan","Status Anak (dikeluarga)","Prestasi Akademik","Motivasi Belajar"]
     n = len(criteria)
     
     matrix = np.ones((n,n))
