@@ -41,7 +41,47 @@ if menu == "Beranda":
 
 # ===== PERHITUNGAN =====
 elif menu == "Perhitungan":
-    st.title("📊 Perhitungan")
+    st.title("Perhitungan")
+    st.subheader("📌 Informasi Kriteria & Skala Penilaian")
+
+    with st.expander("Lihat Penjelasan Kriteria"):
+        st.write("""
+        **Skala yang digunakan: 1 – 3**
+    
+        Keterangan:
+        - 3 = Sangat Layak / Prioritas Tinggi  
+        - 2 = Cukup Layak  
+        - 1 = Kurang Layak  
+    
+        **Indikator Penilaian:**
+    
+        1. **Tanggungan Keluarga**
+           - > 4 orang = 3  
+           - 2–3 orang = 2  
+           - ≤ 1 orang = 1  
+    
+        2. **Status Anak**
+           - Yatim Piatu = 3  
+           - Yatim / Piatu / Tidak Utuh = 2  
+           - Orang Tua Lengkap = 1  
+    
+        3. **Nilai Akademik**
+           - Tinggi = 3  
+           - Sedang = 2  
+           - Rendah = 1  
+    
+        4. **Penghasilan Orang Tua**
+           - < 500.000 = 3  
+           - 500.000 – 900.000 = 2  
+           - > 1.000.000 = 1  
+    
+        5. **Motivasi Belajar**
+           - Tinggi = 3  
+           - Sedang = 2  
+           - Rendah = 1  
+        **Catatan:**
+        Data yang dimasukkan sudah dalam bentuk angka berdasarkan konversi indikator di atas.
+        """)
     st.subheader("Input Data Alternatif")
 
     data = pd.DataFrame({
@@ -66,7 +106,7 @@ elif menu == "Perhitungan":
     for i in range(n):
         for j in range(i+1, n):
             nilai = st.number_input(
-                f"{criteria[i]} dibanding {criteria[j]}",
+                f"{criteria[i]} vs {criteria[j]}",
                 min_value=1.0,
                 max_value=9.0,
                 value=1.0,
