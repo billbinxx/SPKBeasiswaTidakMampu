@@ -30,18 +30,20 @@ st.info("Metode yang digunakan: AHP")
 
 st.markdown("---")
 
+menu = st.sidebar.selectbox("Menu", 
+                            ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
+                           )
 if st.button("➡️ Mulai Perhitungan"):
     st.success("Silakan lanjut ke menu perhitungan di sidebar")
-menu = st.sidebar.selectbox("Menu", 
-                            ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"])
+    
 if menu == "Beranda":
     st.write("Halaman Beranda")
 
 elif menu == "Perhitungan":
     st.write("Perhitungan ")
 
-elif menu == "Ranking":
+elif menu == "Hasil Ranking":
     st.write("Hasil Ranking")
 
-elif menu == "Sensitivitas":
+elif menu == "Analisis Sensitivitas":
     st.write("Analisis Sensitivitas")
