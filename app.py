@@ -35,7 +35,7 @@ menu = st.sidebar.selectbox("Menu",
                             ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
                            )
 if menu == "Beranda":
-pass
+    pass
 
 elif menu == "Perhitungan":
     st.write("Perhitungan ")
