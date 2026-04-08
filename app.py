@@ -46,17 +46,15 @@ elif menu == "Perhitungan":
 
     with st.expander("Lihat Penjelasan Kriteria"):
         st.write("""
-        **Skala yang digunakan: 1 – 3**
-    
+        **Skala yang digunakan merupakan bentuk yang telah di konversi menjadi angka 1-3 dengan keterangan seperti dibawah ini, untuk mempermundah proses perhitungan**
         Keterangan:
         - 3 = Sangat Layak / Prioritas Tinggi  
         - 2 = Cukup Layak  
         - 1 = Kurang Layak  
     
         **Indikator Penilaian:**
-    
         1. **Tanggungan Keluarga**
-           - (>)4 orang = 3  
+           - ≥ 4 orang = 3   
            - 2–3 orang = 2  
            - ≤ 1 orang = 1  
     
@@ -73,7 +71,7 @@ elif menu == "Perhitungan":
         4. **Penghasilan Orang Tua**
            - < 500.000 = 3  
            - 500.000 – 900.000 = 2  
-           - > 1.000.000 = 1  
+           - ≥ 1.000.000 = 1  
     
         5. **Motivasi Belajar**
            - Tinggi = 3  
