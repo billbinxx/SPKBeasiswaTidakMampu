@@ -53,7 +53,7 @@ elif menu == "Input Data":
         **Indikator Penilaian:** 
         1. **Penghasilan Orang Tua** 
         - < 500.000 = 3 
-        - 500.000 – 900.000 = 2 
+        - 500.000 -- 900.000 = 2 
         - ≥ 1.000.000 = 1
 
         2. **Tanggungan Keluarga** 
