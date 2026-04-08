@@ -118,6 +118,10 @@ elif menu == "Perhitungan":
             matrix[i][j] = nilai
             matrix[j][i] = 1 / nilai
             
+        st.subheader("Matriks Perbandingan")
+            df_matrix = pd.DataFrame(matrix, columns=criteria, index=criteria)
+            st.dataframe(df_matrix)
+            
     if st.button("Hitung Bobot"):
         col_sum = matrix.sum(axis=0)
         norm_matrix = matrix / col_sum
