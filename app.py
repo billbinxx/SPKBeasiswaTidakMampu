@@ -47,6 +47,7 @@ elif menu == "Perhitungan":
     with st.expander("Lihat Penjelasan Kriteria"):
         st.write("""
         **Skala yang digunakan merupakan bentuk yang telah di konversi menjadi angka 1-3 dengan keterangan seperti dibawah ini, untuk mempermundah proses perhitungan**
+        
         Keterangan:
         - 3 = Sangat Layak / Prioritas Tinggi  
         - 2 = Cukup Layak  
@@ -57,21 +58,25 @@ elif menu == "Perhitungan":
            - ≥ 4 orang = 3   
            - 2–3 orang = 2  
            - ≤ 1 orang = 1  
+
     
         2. **Status Anak**
            - Yatim Piatu = 3  
            - Yatim / Piatu / Tidak Utuh = 2  
            - Orang Tua Lengkap = 1  
+
     
         3. **Nilai Akademik**
            - Tinggi = 3  
            - Sedang = 2  
            - Rendah = 1  
+
     
         4. **Penghasilan Orang Tua**
            - < 500.000 = 3  
            - 500.000 – 900.000 = 2  
            - ≥ 1.000.000 = 1  
+
     
         5. **Motivasi Belajar**
            - Tinggi = 3  
