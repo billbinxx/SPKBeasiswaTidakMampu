@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd 
+import numpy as np
 
 st.set_page_config(page_title="SPK Beasiswa Tidak Mampu", layout="centered")
 
@@ -31,9 +33,9 @@ st.info("Metode yang digunakan: AHP")
 st.write ("Pergi ke Menu Sidebar untuk Melanjutkan Perhitungan")
 st.markdown("---")
 
-menu = st.sidebar.selectbox("Menu", 
-                            ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
-                           )
+menu = st.sidebar.selectbox
+st.write ("Sistem Penunjang Keputusan Beasiswa Tidak Mampu SMKN Gudo Jombang")
+("Menu", ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"])
 if menu == "Beranda":
     pass
 
