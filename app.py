@@ -11,33 +11,33 @@ menu = st.sidebar.selectbox(
 
 # ===== HALAMAN AWAL =====
 if menu == "Beranda":
-st.title("🎓 Sistem Pendukung Keputusan Beasiswa")
+    st.title("🎓 Sistem Pendukung Keputusan Beasiswa")
 
-st.write("""
-Sistem ini digunakan untuk membantu menentukan penerima beasiswa tidak mampu 
-menggunakan metode **Analytical Hierarchy Process (AHP)**.
-""")
+    st.write("""
+    Sistem ini digunakan untuk membantu menentukan penerima beasiswa tidak mampu 
+    menggunakan metode **Analytical Hierarchy Process (AHP)**.
+    """)
 
-st.subheader("🎯 Tujuan")
-st.write("""
-- Menentukan prioritas penerima beasiswa
-- Menghasilkan peringkat alternatif
-- Menganalisis sensitivitas bobot kriteria
-""")
+    st.subheader("🎯 Tujuan")
+    st.write("""
+    - Menentukan prioritas penerima beasiswa
+    - Menghasilkan peringkat alternatif
+    - Menganalisis sensitivitas bobot kriteria
+    """)
 
-st.subheader("📊 Kriteria Penilaian")
-st.write("""
-1. Tanggungan Keluarga  
-2. Status Anak  
-3. Nilai Akademik  
-4. Penghasilan Orang Tua  
-5. Motivasi Belajar  
-""")
+    st.subheader("📊 Kriteria Penilaian")
+    st.write("""
+    1. Tanggungan Keluarga  
+    2. Status Anak  
+    3. Nilai Akademik  
+    4. Penghasilan Orang Tua  
+    5. Motivasi Belajar  
+    """)
 
-st.info("Metode yang digunakan: AHP")
+   st.info("Metode yang digunakan: AHP")
 
-st.write ("Gunakan Menu Sidebar untuk Melanjutkan Perhitungan")
-st.markdown("---")
+   st.write ("Gunakan Menu Sidebar untuk Melanjutkan Perhitungan")
+   st.markdown("---")
 
 elif menu == "Perhitungan":
     st.write("Perhitungan ")
