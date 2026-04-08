@@ -54,7 +54,7 @@ elif menu == "Input Data":
         1. **Penghasilan Orang Tua** 
         - < 500.000 = 3 
         - 500.000 -- 900.000 = 2 
-        - ≥ 1.000.000 = 1
+        - ≥ 1 juta = 1
 
         2. **Tanggungan Keluarga** 
         - ≥ 4 orang = 3 
