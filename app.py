@@ -34,7 +34,7 @@ st.markdown("---")
 menu = st.sidebar.selectbox("Menu", 
                             ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
                            )
-if menu == "Beranda"
+if menu == "Beranda":
 pass
 
 elif menu == "Perhitungan":
