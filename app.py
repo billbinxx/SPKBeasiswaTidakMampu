@@ -56,7 +56,7 @@ elif menu == "Perhitungan":
         **Indikator Penilaian:**
     
         1. **Tanggungan Keluarga**
-           - > 4 orang = 3  
+           - (>)4 orang = 3  
            - 2–3 orang = 2  
            - ≤ 1 orang = 1  
     
