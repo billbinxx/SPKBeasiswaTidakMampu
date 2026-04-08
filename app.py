@@ -74,4 +74,14 @@ elif menu == "Perhitungan":
             )
             matrix[i][j] = nilai
             matrix[j][i] = 1 / nilai
+            
+    if st.button("Hitung Bobot"):
 
+    col_sum = matrix.sum(axis=0)
+    norm_matrix = matrix / col_sum
+    weights = norm_matrix.mean(axis=1)
+
+    st.subheader("Bobot Kriteria")
+
+    for i, c in enumerate(criteria):
+        st.write(f"{c}: {round(weights[i],4)}")
