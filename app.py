@@ -187,3 +187,58 @@ elif menu == "Hasil Ranking":
 
     else:
         st.warning("Silakan input data terlebih dahulu di menu Input Data")
+
+#===ANALISIS SENSITIVITAS
+elif menu == "Analisis Sensitivitas":
+    st.title("📈 Analisis Sensitivitas")
+
+    if "data" in st.session_state and "matrix" in st.session_state:
+
+        data = st.session_state.data.copy()
+        matrix = st.session_state.matrix
+
+        criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
+
+        # --- HITUNG BOBOT AWAL ---
+        col_sum = matrix.sum(axis=0)
+        norm_matrix = matrix / col_sum
+        weights = norm_matrix.mean(axis=1)
+
+        st.subheader("Bobot Awal")
+        st.write(dict(zip(criteria, weights)))
+
+        # --- FUNGSI HITUNG RANKING ---
+        def hitung_ranking(bobot):
+            nilai = data[criteria].values
+            skor = np.dot(nilai, bobot)
+            df = data.copy()
+            df["Skor"] = skor
+            df = df.sort_values(by="Skor", ascending=False)
+            df["Ranking"] = range(1, len(df)+1)
+            return df
+
+        # --- RANKING AWAL ---
+        st.subheader("Ranking Awal")
+        ranking_awal = hitung_ranking(weights)
+        st.dataframe(ranking_awal)
+
+        # --- SKENARIO ---
+        st.subheader("Hasil Sensitivitas")
+
+        for i, k in enumerate(criteria):
+
+            st.markdown(f"### 🔄 Skenario: Bobot {k} dinaikkan")
+
+            bobot_baru = weights.copy()
+
+            # naikkan 20%
+            bobot_baru[i] = bobot_baru[i] * 1.2
+
+            # normalisasi ulang biar total = 1
+            bobot_baru = bobot_baru / bobot_baru.sum()
+
+            st.write("Bobot Baru:", dict(zip(criteria, bobot_baru)))
+
+            hasil = hitung_ranking(bobot_baru)
+
+            st.dataframe(hasil)
