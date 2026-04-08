@@ -46,7 +46,7 @@ elif menu == "Perhitungan":
 
     data = pd.DataFrame({
         "Nama": ["Siswa 1", "Siswa 2"],
-        "Kelas dan Jurusan": ["X TKJ 1"],
+        "Kelas dan Jurusan": ["X TKJ 1", "XI TOT"],
         "Tanggungan": [2,3],
         "Status": [1,2],
         "Akademik": [3,2],
