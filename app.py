@@ -55,15 +55,14 @@ elif menu == "Perhitungan":
     st.title ("Perhitungan AHP")
 
 # INPUT DATA ALTERNATIF 
-st.subheader("Input Data Alternatif")
-
- data = pd.DataFrame({
-        "Nama": ["Siswa 1", "Siswa 2"],
-        "Tanggungan": [2,3],
-        "Status": [1,2],
-        "Akademik": [3,2],
-        "Penghasilan": [2,1],
-        "Motivasi": [3,3],
-    })
+    st.subheader("Input Data Alternatif")
+    data = pd.DataFrame({
+           "Nama": ["Siswa 1", "Siswa 2"],
+           "Tanggungan": [2,3],
+           "Status": [1,2],
+           "Akademik": [3,2],
+           "Penghasilan": [2,1],
+           "Motivasi": [3,3],
+       })
 
     edited_data = st.data_editor(data, num_rows="dynamic")
