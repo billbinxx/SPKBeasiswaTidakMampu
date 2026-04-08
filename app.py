@@ -157,6 +157,18 @@ elif menu == "Hasil Ranking":
             "Bobot": weights
         }))
 
+        # --- URUTAN PRIORITAS KRITERIA ---
+        st.subheader("Urutan Prioritas Kriteria")
+        
+        df_urut = pd.DataFrame({
+            "Kriteria": criteria,
+            "Bobot": weights
+        })
+        df_urut = df_urut.sort_values(by="Bobot", ascending=False)
+        df_urut["Ranking"] = range(1, len(df_urut)+1)
+        
+        st.dataframe(df_urut)
+        
         # --- CI & CR ---
         lambda_max = (col_sum * weights).sum()
         CI = (lambda_max - n) / (n - 1)
@@ -196,18 +208,14 @@ elif menu == "Analisis Sensitivitas":
 
         data = st.session_state.data.copy()
         matrix = st.session_state.matrix
-
         criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
 
-        # --- HITUNG BOBOT AWAL ---
+        # --- BOBOT AWAL ---
         col_sum = matrix.sum(axis=0)
         norm_matrix = matrix / col_sum
         weights = norm_matrix.mean(axis=1)
 
-        st.subheader("Bobot Awal")
-        st.write(dict(zip(criteria, weights)))
-
-        # --- FUNGSI HITUNG RANKING ---
+        # fungsi ranking
         def hitung_ranking(bobot):
             nilai = data[criteria].values
             skor = np.dot(nilai, bobot)
@@ -217,28 +225,52 @@ elif menu == "Analisis Sensitivitas":
             df["Ranking"] = range(1, len(df)+1)
             return df
 
-        # --- RANKING AWAL ---
-        st.subheader("Ranking Awal")
+        # ranking awal
         ranking_awal = hitung_ranking(weights)
+        st.subheader("Ranking Awal")
         st.dataframe(ranking_awal)
 
-        # --- SKENARIO ---
+        perubahan_kriteria = []
+
         st.subheader("Hasil Sensitivitas")
 
         for i, k in enumerate(criteria):
 
-            st.markdown(f"### 🔄 Skenario: Bobot {k} dinaikkan")
+            st.markdown(f"### 🔄 Skenario: {k} dinaikkan")
 
             bobot_baru = weights.copy()
-
-            # naikkan 20%
             bobot_baru[i] = bobot_baru[i] * 1.2
-
-            # normalisasi ulang biar total = 1
             bobot_baru = bobot_baru / bobot_baru.sum()
-
-            st.write("Bobot Baru:", dict(zip(criteria, bobot_baru)))
 
             hasil = hitung_ranking(bobot_baru)
 
+            # CEK PERUBAHAN RANKING
+            berubah = not ranking_awal["Nama"].equals(hasil["Nama"])
+
+            if berubah:
+                st.error("Ranking BERUBAH ❗ (Sensitif)")
+                perubahan_kriteria.append((k, True))
+            else:
+                st.success("Ranking TIDAK berubah (Stabil)")
+                perubahan_kriteria.append((k, False))
+
             st.dataframe(hasil)
+
+        # --- KESIMPULAN ---
+        st.subheader("Kesimpulan Sensitivitas")
+
+        df_sens = pd.DataFrame(perubahan_kriteria, columns=["Kriteria","Sensitif"])
+
+        # ubah ke label
+        df_sens["Status"] = df_sens["Sensitif"].apply(lambda x: "Sensitif" if x else "Stabil")
+
+        st.dataframe(df_sens)
+
+        # kriteria paling sensitif
+        sensitif_only = df_sens[df_sens["Sensitif"] == True]
+
+        if not sensitif_only.empty:
+            st.warning("Kriteria yang paling mempengaruhi perubahan ranking:")
+            st.write(sensitif_only["Kriteria"].tolist())
+        else:
+            st.success("Semua kriteria stabil (tidak ada perubahan ranking)")
