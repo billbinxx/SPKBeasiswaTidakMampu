@@ -3,8 +3,14 @@ import pandas as pd
 import numpy as np
 
 st.set_page_config(page_title="SPK Beasiswa Tidak Mampu", layout="centered")
+#===MENUBAR
+menu = st.sidebar.selectbox(
+ "Menu", 
+ ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
+)
 
 # ===== HALAMAN AWAL =====
+if menu == "Beranda":
 st.title("🎓 Sistem Pendukung Keputusan Beasiswa")
 
 st.write("""
@@ -33,16 +39,20 @@ st.info("Metode yang digunakan: AHP")
 st.write ("Gunakan Menu Sidebar untuk Melanjutkan Perhitungan")
 st.markdown("---")
 
-menu = st.sidebar.selectbox
-("Menu", 
- ["Beranda", "Perhitungan", "Hasil Ranking","Analisis Sensitivitas"]
-)
-
-if menu == "Beranda":
-    pass
-
 elif menu == "Perhitungan":
     st.write("Perhitungan ")
+      st.subheader("Input Data Alternatif")
+
+    data = pd.DataFrame({
+        "Nama": ["Siswa 1", "Siswa 2"],
+        "Tanggungan": [2,3],
+        "Status": [1,2],
+        "Akademik": [3,2],
+        "Penghasilan": [2,1],
+        "Motivasi": [3,3],
+    })
+
+    edited_data = st.data_editor(data, num_rows="dynamic")
 
 elif menu == "Hasil Ranking":
     st.write("Hasil Ranking")
@@ -50,19 +60,3 @@ elif menu == "Hasil Ranking":
 elif menu == "Analisis Sensitivitas":
     st.write("Analisis Sensitivitas")
     
-#===PERHITUNGAN
-elif menu == "Perhitungan": 
-    st.title ("Perhitungan AHP")
-
-# INPUT DATA ALTERNATIF 
-    st.subheader("Input Data Alternatif")
-    data = pd.DataFrame({
-           "Nama": ["Siswa 1", "Siswa 2"],
-           "Tanggungan": [2,3],
-           "Status": [1,2],
-           "Akademik": [3,2],
-           "Penghasilan": [2,1],
-           "Motivasi": [3,3],
-       })
-
-    edited_data = st.data_editor(data, num_rows="dynamic")
