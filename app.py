@@ -44,27 +44,39 @@ elif menu == "Input Data":
     st.subheader("📌 Informasi Kriteria & Skala Penilaian")
 
     with st.expander("Lihat Penjelasan Kriteria"):
-        st.write("""
-        Skala 1–3:
-
+        st.write("Skala yang digunakan merupakan bentuk yang telah di konversi menjadi angka 1-3 dengan keterangan seperti dibawah ini, untuk mempermundah proses perhitungan")
+        Kriteria:
         - 3 = Sangat Layak  
         - 2 = Cukup Layak  
         - 1 = Kurang Layak  
 
-        **Tanggungan**
-        - ≥ 4 = 3  
-        - 2–3 = 2  
-        - ≤ 1 = 1  
+        **Indikator Penilaian:** 
+        1. **Penghasilan Orang Tua** 
+        - < 500.000 = 3 
+        - 500.000 – 900.000 = 2 
+        - ≥ 1.000.000 = 1
 
-        **Status**
+        2. **Tanggungan Keluarga** 
+        - ≥ 4 orang = 3 
+        - 2–3 orang = 2 
+        - ≤ 1 orang = 1 
+
+        3. **Status**
         - Yatim Piatu = 3  
-        - Yatim/Piatu = 2  
+        - Yatim/Piatu/Keluarga Tidak utuh = 2  
         - Lengkap = 1  
 
-        **Penghasilan**
-        - < 500.000 = 3  
-        - 500.000–900.000 = 2  
-        - ≥ 1.000.000 = 1  
+        4.**Nilai Akademik** 
+        - Tinggi = 3 
+        - Sedang = 2 
+        - Rendah = 1
+
+        5.3. **Motivasi Belajar** 
+        - Tinggi = 3 
+        - Sedang = 2 
+        - Rendah = 1
+           **Catatan:** 
+            Data yang dimasukkan sudah dalam bentuk angka berdasarkan konversi indikator di atas.
         """)
 
     # --- DATA ALTERNATIF ---
