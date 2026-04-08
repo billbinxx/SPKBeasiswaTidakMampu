@@ -56,3 +56,22 @@ elif menu == "Perhitungan":
 
     edited_data = st.data_editor(data, num_rows="dynamic")
 
+    st.subheader("Pairwise Comparison Kriteria")
+
+    criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
+    n = len(criteria)
+    
+    matrix = np.ones((n,n))
+    
+    for i in range(n):
+        for j in range(i+1, n):
+            nilai = st.number_input(
+                f"{criteria[i]} dibanding {criteria[j]}",
+                min_value=1.0,
+                max_value=9.0,
+                value=1.0,
+                key=f"{i}{j}"
+            )
+            matrix[i][j] = nilai
+            matrix[j][i] = 1 / nilai
+
