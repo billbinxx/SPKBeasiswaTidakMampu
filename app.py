@@ -3,6 +3,21 @@ import pandas as pd
 import numpy as np
 import os
 
+file_excel = "DATA_ALTERNATIF.xlsx"
+
+if os.path.exists(file_excel):
+    data_excel = pd.read_excel(file_excel)
+else:
+    data_excel = pd.DataFrame({
+        "Nama": ["Siswa 1"],
+        "Kelas": ["X"],
+        "Tanggungan": [1],
+        "Status": [1],
+        "Akademik": [1],
+        "Penghasilan": [1],
+        "Motivasi": [1],
+    })
+
 st.set_page_config(page_title="SPK Beasiswa Tidak Mampu", layout="centered")
 
 #=== MENUBAR ===
@@ -84,17 +99,11 @@ elif menu == "Input Data":
     # --- DATA ALTERNATIF ---
     st.subheader("Input Data Alternatif")
 
-    data = pd.DataFrame({
-        "Nama": ["Siswa 1", "Siswa 2"],
-        "Kelas": ["X TKJ 1", "XI TOT"],
-        "Tanggungan": [2,3],
-        "Status": [1,2],
-        "Akademik": [3,2],
-        "Penghasilan": [2,1],
-        "Motivasi": [3,3],
-    })
+    edited_data = st.data_editor(data_excel, num_rows="dynamic")
 
-    edited_data = st.data_editor(data, num_rows="dynamic")
+    if st.button("Gunakan Data Ini"):
+        st.session_state.data = edited_data
+        st.success("Data berhasil digunakan!")
 
     # --- MATRIX ---
     st.subheader("Input Matriks Perbandingan Kriteria")
