@@ -117,19 +117,18 @@ elif menu == "Input Data":
         9 = Mutlak  
         """)
     
-    if "matrix" not in st.session_state:
-        st.session_state.matrix = pd.DataFrame(
-            np.ones((5,5)),
-            columns=criteria,
-            index=criteria
-        )
+    criteria = ["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]
 
-    edited_matrix = st.data_editor(
-        st.session_state.matrix,
-        key="matrix_editor"
+if "matrix" not in st.session_state:
+    st.session_state.matrix = pd.DataFrame(
+        np.ones((5,5)),
+        columns=criteria,
+        index=criteria
     )
 
-    matrix = edited_matrix.values
+edited_matrix = st.data_editor(st.session_state.matrix)
+
+matrix = edited_matrix.values
     
     # VALIDASI
     if not np.allclose(matrix, 1 / matrix.T):
