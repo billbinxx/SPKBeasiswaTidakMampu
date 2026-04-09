@@ -191,7 +191,7 @@ elif menu == "Hasil Ranking":
         # --- CI & CR ---
         lambda_max = (col_sum * weights).sum()
         CI = (lambda_max - n) / (n - 1)
-        RI = 1.12
+        RI = 1,12
         CR = CI / RI
 
         st.subheader("Uji Konsistensi")
