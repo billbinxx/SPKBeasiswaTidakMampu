@@ -105,7 +105,7 @@ elif menu == "Input Data":
         st.session_state.data = edited_data
         st.success("Data berhasil digunakan!")
         
-# --- MATRIX ---
+    # --- MATRIX ---
     st.subheader("Input Matriks Perbandingan Kriteria")
     
     with st.expander("📌 Skala Saaty (1–9)"):
@@ -125,14 +125,17 @@ elif menu == "Input Data":
             np.ones((5,5)),
             columns=criteria,
             index=criteria
+        )
+    
+    # tampilkan editor (PAKAI KEY)
+    edited_matrix = st.data_editor(
+        st.session_state.matrix,
+        key="matrix_editor"
     )
     
-    # tampilkan matrix (HANYA SEKALI)
-    edited_matrix = st.data_editor(st.session_state.matrix)
+    # AUTO RECIPROCAL (PAKAI edited_matrix)
+    matrix = edited_matrix.copy()
     
-    # --- AUTO RECIPROCAL ---
-    matrix = st.session_state.matrix.copy()
-
     for i in range(len(criteria)):
         for j in range(len(criteria)):
             if i != j:
@@ -140,12 +143,12 @@ elif menu == "Input Data":
                     matrix.iloc[j, i] = 1 / float(matrix.iloc[i, j])
                 except:
                     pass
-
-st.session_state.matrix = matrix
     
-    st.caption("Isi satu sisi matriks saja, sistem akan otomatis mengisi kebalikannya (1/n)")
+    # SIMPAN (HARUS DI DALAM MENU)
+    st.session_state.matrix = matrix
     
-
+    st.caption("Isi satu sisi matriks saja, sistem otomatis isi 1/n")
+    
 
 # ===== HASIL RANKING =====
 elif menu == "Hasil Ranking":
