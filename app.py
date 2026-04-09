@@ -127,10 +127,10 @@ elif menu == "Input Data":
         index=criteria
     )
 
-edited_matrix = st.data_editor(st.session_state.matrix)
-
-st.session_state.matrix = edited_matrix
-    )
+    edited_matrix = st.data_editor(st.session_state.matrix)
+    
+    st.session_state.matrix = edited_matrix
+    
 
     # tampilkan matrix
     edited_matrix = st.data_editor(st.session_state.matrix)
