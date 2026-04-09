@@ -117,38 +117,31 @@ elif menu == "Input Data":
         9 = Mutlak  
         """)
     
-    criteria = ["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]
-    
-    # inisialisasi pertama kali
     if "matrix" not in st.session_state:
-        st.session_state.matrix = pd.DataFrame(
-            np.ones((5,5)),
-            columns=criteria,
-            index=criteria
-        )
-    
-    # tampilkan editor (PAKAI KEY)
+    st.session_state.matrix = pd.DataFrame(
+        np.ones((5,5)),
+        columns=criteria,
+        index=criteria
+    )
+
     edited_matrix = st.data_editor(
         st.session_state.matrix,
         key="matrix_editor"
     )
+
+    matrix = edited_matrix.values
     
-    # AUTO RECIPROCAL (PAKAI edited_matrix)
-    matrix = edited_matrix.copy()
+    # VALIDASI
+    if not np.allclose(matrix, 1 / matrix.T):
+        st.error("❌ Matriks tidak reciprocal (aij ≠ 1/aji)")
+    else:
+        st.success("✅ Matriks sudah reciprocal")
     
-    for i in range(len(criteria)):
-        for j in range(len(criteria)):
-            if i != j:
-                try:
-                    matrix.iloc[j, i] = 1 / float(matrix.iloc[i, j])
-                except:
-                    pass
-    
-    # SIMPAN (HARUS DI DALAM MENU)
-    st.session_state.matrix = matrix
-    
-    st.caption("Isi satu sisi matriks saja, sistem otomatis isi 1/n")
-    
+    if (matrix <= 0).any():
+        st.error("❌ Tidak boleh ada nilai 0 atau negatif")
+
+    # SIMPAN
+    st.session_state.matrix = edited_matrix
 
 # ===== HASIL RANKING =====
 elif menu == "Hasil Ranking":
