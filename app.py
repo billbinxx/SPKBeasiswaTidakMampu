@@ -118,11 +118,11 @@ elif menu == "Input Data":
         """)
     
     if "matrix" not in st.session_state:
-    st.session_state.matrix = pd.DataFrame(
-        np.ones((5,5)),
-        columns=criteria,
-        index=criteria
-    )
+        st.session_state.matrix = pd.DataFrame(
+            np.ones((5,5)),
+            columns=criteria,
+            index=criteria
+        )
 
     edited_matrix = st.data_editor(
         st.session_state.matrix,
