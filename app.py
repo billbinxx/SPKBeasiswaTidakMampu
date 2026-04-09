@@ -132,28 +132,27 @@ elif menu == "Input Data":
     
     # inisialisasi pertama kali
     if "matrix" not in st.session_state:
-        st.session_state.matrix = pd.DataFrame(
-            np.ones((5,5)),
-            columns=criteria,
-            index=criteria
-        )
+    st.session_state.matrix = pd.DataFrame(
+        np.ones((5,5)),
+        columns=criteria,
+        index=criteria
+    )
     
     # tampilkan matrix (HANYA SEKALI)
     edited_matrix = st.data_editor(st.session_state.matrix)
     
     # --- AUTO RECIPROCAL ---
-    matrix = edited_matrix.copy()
-    
+    matrix = st.session_state.matrix.copy()
+
     for i in range(len(criteria)):
         for j in range(len(criteria)):
             if i != j:
                 try:
                     matrix.iloc[j, i] = 1 / float(matrix.iloc[i, j])
                 except:
-                    matrix.iloc[j, i] = 1
-    
-    # simpan hasil
-    st.session_state.matrix = matrix
+                    pass
+
+st.session_state.matrix = matrix
     
     st.caption("Isi satu sisi matriks saja, sistem akan otomatis mengisi kebalikannya (1/n)")
     
