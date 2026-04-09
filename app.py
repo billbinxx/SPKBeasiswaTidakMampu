@@ -121,17 +121,33 @@ elif menu == "Input Data":
     criteria = ["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]
   
     if "matrix" not in st.session_state:
-        st.session_state.matrix = pd.DataFrame(
-            np.ones((5,5)),
-            columns=criteria,
-            index=criteria
+    st.session_state.matrix = pd.DataFrame(
+        np.ones((5,5)),
+        columns=criteria,
+        index=criteria
+    )
+
+edited_matrix = st.data_editor(st.session_state.matrix)
+
+st.session_state.matrix = edited_matrix
     )
 
     # tampilkan matrix
     edited_matrix = st.data_editor(st.session_state.matrix)
     
-    # update setiap perubahan
-    st.session_state.matrix = edited_matrix
+    # 🔥 TAMBAHKAN DI SINI
+    matrix = edited_matrix.copy()
+    
+    for i in range(len(criteria)):
+        for j in range(len(criteria)):
+            if i != j:
+                try:
+                    matrix.iloc[j, i] = 1 / float(matrix.iloc[i, j])
+                except:
+                    matrix.iloc[j, i] = 1
+
+# simpan ke session
+st.session_state.matrix = matrix
 
 
 
