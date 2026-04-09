@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd 
 import numpy as np
+import os
 
 st.set_page_config(page_title="SPK Beasiswa Tidak Mampu", layout="centered")
 
@@ -106,22 +107,24 @@ elif menu == "Input Data":
         7 = Sangat penting  
         9 = Mutlak  
         """)
-
-    criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
-
-    matrix_df = pd.DataFrame(
-        np.ones((5,5)),
-        columns=criteria,
-        index=criteria
+  # --- MATRIX ---
+    st.subheader("Input Matriks Perbandingan Kriteria")
+    criteria = ["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]
+  
+    if "matrix" not in st.session_state:
+        st.session_state.matrix = pd.DataFrame(
+            np.ones((5,5)),
+            columns=criteria,
+            index=criteria
     )
 
-    edited_matrix = st.data_editor(matrix_df)
+    # tampilkan matrix
+    edited_matrix = st.data_editor(st.session_state.matrix)
+    
+    # update setiap perubahan
+    st.session_state.matrix = edited_matrix
 
-    # --- SIMPAN ---
-    if st.button("Simpan Data"):
-        st.session_state.data = edited_data
-        st.session_state.matrix = edited_matrix.values
-        st.success("Data berhasil disimpan!")
+
 
 # ===== HASIL RANKING =====
 elif menu == "Hasil Ranking":
@@ -130,7 +133,7 @@ elif menu == "Hasil Ranking":
     if "data" in st.session_state and "matrix" in st.session_state:
 
         data = st.session_state.data.copy()
-        matrix = st.session_state.matrix
+        matrix = st.session_state.matrix.values
 
         criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
         n = len(criteria)
@@ -207,7 +210,7 @@ elif menu == "Analisis Sensitivitas":
     if "data" in st.session_state and "matrix" in st.session_state:
 
         data = st.session_state.data.copy()
-        matrix = st.session_state.matrix
+        matrix = st.session_state.matrix.values
         criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
 
         # --- BOBOT AWAL ---
