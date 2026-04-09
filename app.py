@@ -188,8 +188,12 @@ elif menu == "Hasil Ranking":
         
         st.dataframe(df_urut)
         
+        # --- EIGEN VALUE ---
+        eigvals, eigvecs = np.linalg.eig(matrix)
+        
+        lambda_max = np.max(eigvals.real)
+        
         # --- CI & CR ---
-        lambda_max = (col_sum * weights).sum()
         CI = (lambda_max - n) / (n - 1)
         RI = 1.12
         CR = CI / RI
