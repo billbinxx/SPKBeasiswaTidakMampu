@@ -11,10 +11,10 @@ else:
     data_excel = pd.DataFrame({
         "Nama": ["Siswa 1"],
         "Kelas": ["X"],
+        "Penghasilan": [1],
         "Tanggungan": [1],
         "Status": [1],
         "Akademik": [1],
-        "Penghasilan": [1],
         "Motivasi": [1],
     })
 
@@ -88,7 +88,7 @@ elif menu == "Input Data":
         - Sedang = 2 
         - Rendah = 1
 
-        5.3. **Motivasi Belajar** 
+        5. **Motivasi Belajar** 
         - Tinggi = 3 
         - Sedang = 2 
         - Rendah = 1
@@ -116,26 +116,32 @@ elif menu == "Input Data":
         7 = Sangat penting  
         9 = Mutlak  
         """)
-  # --- MATRIX ---
+# --- MATRIX ---
     st.subheader("Input Matriks Perbandingan Kriteria")
+    
+    with st.expander("📌 Skala Saaty (1–9)"):
+        st.write("""
+        1 = Sama penting  
+        3 = Sedikit lebih penting  
+        5 = Lebih penting  
+        7 = Sangat penting  
+        9 = Mutlak  
+        """)
+    
     criteria = ["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]
-  
+    
+    # inisialisasi pertama kali
     if "matrix" not in st.session_state:
-    st.session_state.matrix = pd.DataFrame(
-        np.ones((5,5)),
-        columns=criteria,
-        index=criteria
-    )
-
+        st.session_state.matrix = pd.DataFrame(
+            np.ones((5,5)),
+            columns=criteria,
+            index=criteria
+        )
+    
+    # tampilkan matrix (HANYA SEKALI)
     edited_matrix = st.data_editor(st.session_state.matrix)
     
-    st.session_state.matrix = edited_matrix
-    
-
-    # tampilkan matrix
-    edited_matrix = st.data_editor(st.session_state.matrix)
-    
-    # 🔥 TAMBAHKAN DI SINI
+    # --- AUTO RECIPROCAL ---
     matrix = edited_matrix.copy()
     
     for i in range(len(criteria)):
@@ -145,10 +151,12 @@ elif menu == "Input Data":
                     matrix.iloc[j, i] = 1 / float(matrix.iloc[i, j])
                 except:
                     matrix.iloc[j, i] = 1
-
-# simpan ke session
-st.session_state.matrix = matrix
-
+    
+    # simpan hasil
+    st.session_state.matrix = matrix
+    
+    st.caption("Isi satu sisi matriks saja, sistem akan otomatis mengisi kebalikannya (1/n)")
+    
 
 
 # ===== HASIL RANKING =====
@@ -160,7 +168,7 @@ elif menu == "Hasil Ranking":
         data = st.session_state.data.copy()
         matrix = st.session_state.matrix.values
 
-        criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
+        criteria = ["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]
         n = len(criteria)
 
         # --- MATRIX ---
@@ -236,7 +244,7 @@ elif menu == "Analisis Sensitivitas":
 
         data = st.session_state.data.copy()
         matrix = st.session_state.matrix.values
-        criteria = ["Tanggungan","Status","Akademik","Penghasilan","Motivasi"]
+        criteria = ["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]
 
         # --- BOBOT AWAL ---
         col_sum = matrix.sum(axis=0)
