@@ -104,18 +104,7 @@ elif menu == "Input Data":
     if st.button("Gunakan Data Ini"):
         st.session_state.data = edited_data
         st.success("Data berhasil digunakan!")
-
-    # --- MATRIX ---
-    st.subheader("Input Matriks Perbandingan Kriteria")
-
-    with st.expander("📌 Skala Saaty (1–9)"):
-        st.write("""
-        1 = Sama penting  
-        3 = Sedikit lebih penting  
-        5 = Lebih penting  
-        7 = Sangat penting  
-        9 = Mutlak  
-        """)
+        
 # --- MATRIX ---
     st.subheader("Input Matriks Perbandingan Kriteria")
     
@@ -132,10 +121,10 @@ elif menu == "Input Data":
     
     # inisialisasi pertama kali
     if "matrix" not in st.session_state:
-    st.session_state.matrix = pd.DataFrame(
-        np.ones((5,5)),
-        columns=criteria,
-        index=criteria
+        st.session_state.matrix = pd.DataFrame(
+            np.ones((5,5)),
+            columns=criteria,
+            index=criteria
     )
     
     # tampilkan matrix (HANYA SEKALI)
