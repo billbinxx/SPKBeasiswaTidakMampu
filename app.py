@@ -132,15 +132,16 @@ elif menu == "Input Data":
     
     # VALIDASI
     if not np.allclose(matrix, 1 / matrix.T):
-        st.error("❌ Matriks tidak reciprocal (aij ≠ 1/aji)")
+        st.error("Matriks belum reciprocal (aij ≠ 1/aji)")
     else:
-        st.success("✅ Matriks sudah reciprocal")
-    
+        st.success("Matriks sudah benar ✅")
     if (matrix <= 0).any():
         st.error("❌ Tidak boleh ada nilai 0 atau negatif")
 
     # SIMPAN
+    if st.button("Simpan Matriks"):
     st.session_state.matrix = edited_matrix
+    st.success("Matriks berhasil disimpan!")
 
 # ===== HASIL RANKING =====
 elif menu == "Hasil Ranking":
