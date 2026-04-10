@@ -216,6 +216,11 @@ elif menu == "Hasil Ranking":
         })
         
         # 🔥 BARU AMBIL NILAI
+        data.columns = data.columns.str.strip()  # hapus spasi
+        data.columns = data.columns.str.title()  # samakan format
+        
+        st.write("Penghasilan","Tanggungan","Status","Akademik","Motivasi:", data.columns.tolist())
+
         nilai = data[criteria].values
         skor = np.dot(nilai, weights)
         
