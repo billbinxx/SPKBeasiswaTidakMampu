@@ -203,14 +203,26 @@ elif menu == "Hasil Ranking":
 
         # ===== RANKING =====
         st.subheader("🏆 Ranking Alternatif")
-
+        
+        # 🔍 CEK KOLOM
+        st.write("Kolom data kamu:", data.columns.tolist())
+        
+        # 🔧 BERSIHKAN & SAMAKAN NAMA
+        data.columns = data.columns.str.strip()
+        
+        data = data.rename(columns={
+            "Penghasilan Orang Tua": "Penghasilan",
+            "Tanggungan Keluarga": "Tanggungan"
+        })
+        
+        # 🔥 BARU AMBIL NILAI
         nilai = data[criteria].values
         skor = np.dot(nilai, weights)
-
+        
         data["Skor Akhir"] = skor
         data = data.sort_values(by="Skor Akhir", ascending=False)
         data["Ranking"] = range(1, len(data)+1)
-
+        
         st.dataframe(data)
 
     else:
