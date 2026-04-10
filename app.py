@@ -7,7 +7,6 @@ file_excel = "DATA_ALTERNATIF.xlsx"
 
 if os.path.exists(file_excel):
     data_excel = pd.read_excel(file_excel, header=0)
-    st.write("HEADER EXCEL:", data_excel.colomns.tolist())
 else:
     data_excel = pd.DataFrame({
         "Nama": ["Siswa 1"],
