@@ -129,14 +129,6 @@ elif menu == "Input Data":
     edited_matrix = st.data_editor(st.session_state.matrix)
     
     matrix = edited_matrix.values
-    
-    # VALIDASI
-    if not np.allclose(matrix, 1 / matrix.T):
-        st.error("Matriks belum reciprocal (aij ≠ 1/aji)")
-    else:
-        st.success("Matriks sudah benar ✅")
-    if (matrix <= 0).any():
-        st.error("❌ Tidak boleh ada nilai 0 atau negatif")
 
     # SIMPAN
     if st.button("Simpan Matriks"):
