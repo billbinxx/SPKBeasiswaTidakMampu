@@ -219,7 +219,7 @@ elif menu == "Hasil Ranking":
         data.columns = data.columns.str.strip()  # hapus spasi
         data.columns = data.columns.str.title()  # samakan format
         
-        st.write("Penghasilan","Tanggungan","Status","Akademik","Motivasi:", data.columns.tolist())
+        st.write("Nama", "Kelas", Penghasilan","Tanggungan","Status","Akademik","Motivasi:", data.columns.tolist())
 
         nilai = data[criteria].values
         skor = np.dot(nilai, weights)
