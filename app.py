@@ -140,8 +140,8 @@ elif menu == "Input Data":
 
     # SIMPAN
     if st.button("Simpan Matriks"):
-    st.session_state.matrix = edited_matrix
-    st.success("Matriks berhasil disimpan!")
+        st.session_state.matrix = edited_matrix
+        st.success("Matriks berhasil disimpan!")
 
 # ===== HASIL RANKING =====
 elif menu == "Hasil Ranking":
