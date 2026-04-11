@@ -256,6 +256,14 @@ elif menu == "Analisis Sensitivitas":
         col_sum = matrix.sum(axis=0)
         norm_matrix = matrix / col_sum
         weights = norm_matrix.mean(axis=1)
+        st.subheader("Bobot Awal Kriteria")
+
+        df_bobot_awal = pd.DataFrame({
+            "Kriteria": criteria,
+            "Bobot Awal": weights
+        })
+        
+        st.dataframe(df_bobot_awal)
 
         # fungsi ranking
         def hitung_ranking(bobot):
@@ -278,13 +286,23 @@ elif menu == "Analisis Sensitivitas":
 
         for i, k in enumerate(criteria):
 
-            st.markdown(f"### 🔄 Skenario: {k} dinaikkan")
-
+            persen = 20  # persen kenaikan
+        
+            st.markdown(f"### 🔄 Skenario: {k} dinaikkan {persen}%")
+        
             bobot_baru = weights.copy()
-            bobot_baru[i] = bobot_baru[i] * 1.2
+            bobot_baru[i] = bobot_baru[i] * (1 + persen/100)
             bobot_baru = bobot_baru / bobot_baru.sum()
+        
+            # tampilkan perubahan bobot
+            df_banding = pd.DataFrame({
+                "Kriteria": criteria,
+                "Bobot Awal": weights,
+                "Bobot Baru": bobot_baru
+            })
 
-            hasil = hitung_ranking(bobot_baru)
+            st.write("Perbandingan Bobot:")
+            st.dataframe(df_banding)
 
             # CEK PERUBAHAN RANKING
             berubah = not ranking_awal["Nama"].equals(hasil["Nama"])
