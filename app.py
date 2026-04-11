@@ -286,10 +286,10 @@ elif menu == "Analisis Sensitivitas":
 
         for i, k in enumerate(criteria):
 
-            persen = 20  # persen kenaikan
-        
+            persen = 20
+            
             st.markdown(f"### 🔄 Skenario: {k} dinaikkan {persen}%")
-        
+            
             bobot_baru = weights.copy()
             bobot_baru[i] = bobot_baru[i] * (1 + persen/100)
             bobot_baru = bobot_baru / bobot_baru.sum()
@@ -300,20 +300,23 @@ elif menu == "Analisis Sensitivitas":
                 "Bobot Awal": weights,
                 "Bobot Baru": bobot_baru
             })
-
+        
             st.write("Perbandingan Bobot:")
             st.dataframe(df_banding)
-
-            # CEK PERUBAHAN RANKING
-            berubah = not ranking_awal["Nama"].equals(hasil["Nama"])
-
+        
+            # 🔥 TAMBAHKAN INI (WAJIB)
+            hasil = hitung_ranking(bobot_baru)
+        
+            # 🔥 PERBAIKI INI (LEBIH AMAN)
+            berubah = not ranking_awal["Ranking"].equals(hasil["Ranking"])
+        
             if berubah:
                 st.error("Ranking BERUBAH ❗ (Sensitif)")
                 perubahan_kriteria.append((k, True))
             else:
                 st.success("Ranking TIDAK berubah (Stabil)")
                 perubahan_kriteria.append((k, False))
-
+        
             st.dataframe(hasil)
 
         # --- KESIMPULAN ---
