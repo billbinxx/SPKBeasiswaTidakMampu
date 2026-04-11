@@ -240,6 +240,15 @@ elif menu == "Analisis Sensitivitas":
     if "data" in st.session_state and "matrix" in st.session_state:
 
         data = st.session_state.data.copy()
+        data.columns = data.columns.str.strip()
+
+        data.rename(columns={
+            "Penghasilan ortu": "Penghasilan",
+            "Jumlah Tanggungan": "Tanggungan",
+            "Status Keluarga": "Status",
+            "Prestasi akademik": "Akademik",
+            "Motivasi belajar": "Motivasi"
+        }, inplace=True)
         matrix = st.session_state.matrix.values
         criteria = ["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]
 
@@ -250,7 +259,7 @@ elif menu == "Analisis Sensitivitas":
 
         # fungsi ranking
         def hitung_ranking(bobot):
-            nilai = data[criteria].values
+            nilai = data[["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]].values
             skor = np.dot(nilai, bobot)
             df = data.copy()
             df["Skor"] = skor
