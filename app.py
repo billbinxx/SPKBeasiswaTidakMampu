@@ -286,7 +286,7 @@ elif menu == "Analisis Sensitivitas":
 
         for i, k in enumerate(criteria):
 
-            persen = 20
+            persen = 10
             
             st.markdown(f"### 🔄 Skenario: {k} dinaikkan {persen}%")
             
