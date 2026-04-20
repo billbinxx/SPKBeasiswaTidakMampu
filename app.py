@@ -307,17 +307,26 @@ elif menu == "Analisis Sensitivitas":
             # 🔥 TAMBAHKAN INI (WAJIB)
             hasil = hitung_ranking(bobot_baru)
         
-            # 🔥 PERBAIKI INI (LEBIH AMAN)
-            berubah = not ranking_awal["Ranking"].equals(hasil["Ranking"])
-        
-            if berubah:
-                st.error("Ranking BERUBAH ❗ (Sensitif)")
-                perubahan_kriteria.append((k, True))
+            # cek perubahan total ranking
+            berubah_total = not ranking_awal["Nama"].equals(hasil["Nama"])
+            
+            # cek perubahan ranking 1
+            ranking1_awal = ranking_awal.iloc[0]["Nama"]
+            ranking1_baru = hasil.iloc[0]["Nama"]
+            
+            if not berubah_total:
+                status = "Stabil Kuat"
+            elif ranking1_awal == ranking1_baru:
+                status = "Stabil Lemah"
             else:
-                st.success("Ranking TIDAK berubah (Stabil)")
-                perubahan_kriteria.append((k, False))
+                status = "Sensitif"
         
-            st.dataframe(hasil)
+            if status == "Sensitif":
+                st.error("🔴 Sensitif (Ranking utama berubah)")
+            elif status == "Stabil Lemah":
+                st.warning("🟡 Stabil Lemah (Perubahan tidak mempengaruhi prioritas utama)")
+            else:
+                st.success("🟢 Stabil Kuat")
 
         # --- KESIMPULAN ---
         st.subheader("Kesimpulan Sensitivitas")
