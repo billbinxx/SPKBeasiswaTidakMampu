@@ -331,8 +331,6 @@ elif menu == "Analisis Sensitivitas":
                 st.warning("🟡 Stabil Lemah (Perubahan tidak mempengaruhi prioritas utama)")
             else:
                 st.success("🟢 Stabil Kuat")
-                
-            status_list.append((k, status))
 
         # --- KESIMPULAN ---
         st.subheader("Kesimpulan Sensitivitas")
