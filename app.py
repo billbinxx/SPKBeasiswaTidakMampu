@@ -286,7 +286,7 @@ elif menu == "Analisis Sensitivitas":
 
         for i, k in enumerate(criteria):
 
-            persen = 50
+            persen = 10
             
             st.markdown(f"### 🔄 Skenario: {k} dinaikkan {persen}%")
             
@@ -306,6 +306,10 @@ elif menu == "Analisis Sensitivitas":
         
             # 🔥 TAMBAHKAN INI (WAJIB)
             hasil = hitung_ranking(bobot_baru)
+
+            # 🔹 tampilkan nilai preferensi
+            st.write("Nilai Preferensi & Ranking:")
+            st.dataframe(hasil)
         
             # cek perubahan total ranking
             berubah_total = not ranking_awal["Nama"].equals(hasil["Nama"])
@@ -327,6 +331,8 @@ elif menu == "Analisis Sensitivitas":
                 st.warning("🟡 Stabil Lemah (Perubahan tidak mempengaruhi prioritas utama)")
             else:
                 st.success("🟢 Stabil Kuat")
+                
+            status_list.append((k, status))
 
         # --- KESIMPULAN ---
         st.subheader("Kesimpulan Sensitivitas")
