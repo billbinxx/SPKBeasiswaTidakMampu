@@ -265,6 +265,24 @@ elif menu == "Analisis Sensitivitas":
         
         st.dataframe(df_bobot_awal)
 
+        # 🔥 TAMBAHKAN DI SINI
+        def adjust_weights(weights, index, persen):
+            w = weights.copy()
+            
+            total_awal = sum(w)
+            
+            kenaikan = w[index] * (persen / 100)
+            w[index] += kenaikan
+            
+            total_lain = total_awal - weights[index]
+            
+            for i in range(len(w)):
+                if i != index:
+                    proporsi = weights[i] / total_lain
+                    w[i] -= kenaikan * proporsi
+            
+            return w
+
         # fungsi ranking
         def hitung_ranking(bobot):
             nilai = data[["Penghasilan","Tanggungan","Status","Akademik","Motivasi"]].values
@@ -282,55 +300,58 @@ elif menu == "Analisis Sensitivitas":
 
         perubahan_kriteria = []
 
-        st.subheader("Hasil Sensitivitas")
+        st.subheader("Hasil Sensitivitas (Semua Kriteria)")
 
+        persen_list = [10, 30, 50]
+        perubahan_kriteria = []
+        
         for i, k in enumerate(criteria):
+            for persen in persen_list:
 
-            persen = 50
-            
-            st.markdown(f"### 🔄 Skenario: {k} dinaikkan {persen}%")
-            
-            bobot_baru = weights.copy()
-            bobot_baru[i] = bobot_baru[i] * (1 + persen/100)
-            bobot_baru = bobot_baru / bobot_baru.sum()
-        
-            # tampilkan perubahan bobot
-            df_banding = pd.DataFrame({
-                "Kriteria": criteria,
-                "Bobot Awal": weights,
-                "Bobot Baru": bobot_baru
-            })
-        
-            st.write("Perbandingan Bobot:")
-            st.dataframe(df_banding)
-        
-            # 🔥 TAMBAHKAN INI (WAJIB)
-            hasil = hitung_ranking(bobot_baru)
+        st.markdown(f"### 🔄 {k} naik {persen}%")
 
-            # 🔹 tampilkan nilai preferensi
-            st.write("Nilai Preferensi & Ranking:")
-            st.dataframe(hasil)
-        
-            # cek perubahan total ranking
-            berubah_total = not ranking_awal["Nama"].equals(hasil["Nama"])
-            
-            # cek perubahan ranking 1
-            ranking1_awal = ranking_awal.iloc[0]["Nama"]
-            ranking1_baru = hasil.iloc[0]["Nama"]
-            
-            if not berubah_total:
-                status = "Stabil Kuat"
-            elif ranking1_awal == ranking1_baru:
-                status = "Stabil Lemah"
-            else:
-                status = "Sensitif"
-        
-            if status == "Sensitif":
-                st.error("🔴 Sensitif (Ranking utama berubah)")
-            elif status == "Stabil Lemah":
-                st.warning("🟡 Stabil Lemah (Perubahan tidak mempengaruhi prioritas utama)")
-            else:
-                st.success("🟢 Stabil Kuat")
+        # 🔥 pakai fungsi baru
+        bobot_baru = adjust_weights(weights, i, persen)
+
+        # cek total
+        st.write(f"Total Bobot: {round(sum(bobot_baru),4)}")
+
+        # tampilkan bobot
+        df_banding = pd.DataFrame({
+            "Kriteria": criteria,
+            "Bobot Awal": weights,
+            "Bobot Baru": bobot_baru
+        })
+
+        st.dataframe(df_banding)
+
+        # hitung ranking
+        hasil = hitung_ranking(bobot_baru)
+
+        st.write("Ranking:")
+        st.dataframe(hasil)
+
+        # cek perubahan
+        berubah_total = not ranking_awal["Nama"].equals(hasil["Nama"])
+
+        ranking1_awal = ranking_awal.iloc[0]["Nama"]
+        ranking1_baru = hasil.iloc[0]["Nama"]
+
+        if not berubah_total:
+            status = "Stabil Kuat"
+        elif ranking1_awal == ranking1_baru:
+            status = "Stabil Lemah"
+        else:
+            status = "Sensitif"
+
+        perubahan_kriteria.append([k, persen, status])
+
+        if status == "Sensitif":
+            st.error("🔴 Sensitif")
+        elif status == "Stabil Lemah":
+            st.warning("🟡 Stabil Lemah")
+        else:
+            st.success("🟢 Stabil Kuat")
 
         # --- KESIMPULAN ---
         st.subheader("Kesimpulan Sensitivitas")
